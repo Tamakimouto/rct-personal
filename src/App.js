@@ -1,28 +1,49 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import './App.css';
+import backgroundImage from './assets/paper.jpg';
+import Home from './components/home';
+import Content from './components/content';
 
-class App extends Component {
+const styles = theme => ({
+    root: {
+        backgroundImage: `url(${backgroundImage})`,
+        height: "100vh",
+        width: "100vw",
+        overflow: "hidden",
+        position: "relative"
+    }
+});
+
+class App extends React.Component {
+
+    state = {
+        open: false,
+    }
+
+    openBook = () => {
+        this.setState({ open: true });
+    }
+
+    closeBook = () => {
+        this.setState({ open: false });
+    }
+
     render() {
+
+        const { classes } = this.props;
+
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <p>
-                        Edit <code>src/App.js</code> and save to reload.
-                    </p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn React
-                    </a>
-                </header>
+            <div className={`${classes.root} App`}>
+                <Home
+                    open={this.state.open}
+                    openBook={this.openBook}
+                    closeBook={this.closeBook}
+                />
+                <Content open={this.state.open} />
             </div>
         );
     }
 }
 
-export default App;
+export default withStyles(styles)(App);
