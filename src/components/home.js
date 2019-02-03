@@ -111,6 +111,7 @@ class Home extends React.Component {
             <Swipe
                 allowMouseEvents
                 onSwipeUp={this.handleSwipe}
+                onSwipeDown={this.handleSwipe}
                 className={classes.root}
                 ref={ref => this.container = ref}
                 onWheel={this.handleScroll}
