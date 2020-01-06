@@ -5,6 +5,8 @@ import { TimelineLite } from 'gsap/all';
 import RootRef from '@material-ui/core/RootRef';
 import IconButton from '@material-ui/core/IconButton';
 import Swipe from 'react-easy-swipe';
+import blogImg from '../assets/blog.png';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     root: {
@@ -14,6 +16,14 @@ const styles = theme => ({
         alignItems: "center",
         alignContent: "center",
         justifyContent: "center",
+        '& .blogLink': {
+            position: "absolute",
+            top: 10,
+            '& img': {
+                width: 30,
+                height: 30
+            }
+        },
         '& .splashImg': {
             maxWidth: "80vw"
         },
@@ -49,16 +59,17 @@ class Home extends React.Component {
         this.title = null;
         this.name = null;
         this.punchline = null;
+        this.blog = null;
         this.button = React.createRef();
     }
 
     componentDidMount() {
-        console.log(this.container)
         this.introAnimation
             .fromTo(this.title, 1, {scale: 0, yPercent: -300 }, {scale: 1, yPercent: -300})
             .to(this.title, 1, {yPercent: 0})
             .from(this.image, 1, {y: 400, opacity: 0}, "-=1")
-            .from(this.button.current, 1, {y: -40, opacity: 0});
+            .from(this.button.current, 1, {y: -40, opacity: 0})
+            .from(this.blog, 1, {y: -40, opacity: 0}, "-=1");
         this.introAnimation.play();
 
         this.openAnimation
@@ -66,7 +77,8 @@ class Home extends React.Component {
             .to(this.image, 1, {y: -400, opacity: 0, height: 0, display: "none"}, "-=1")
             .to(this.button.current, 1, {opacity: 0, y: 100, display: "none"}, "-=1")
             .to(this.name, 0.3, {marginBottom: 0}, '-=1')
-            .to(this.punchline, 0.5, {marginTop: 0}, '-=1');
+            .to(this.punchline, 0.5, {marginTop: 0}, '-=1')
+            .to(this.blog, 1, {left: 10}, "-=1");
 
         window.addEventListener("keydown", this.handleKey);
     }
@@ -94,7 +106,9 @@ class Home extends React.Component {
     }
 
     openBook = () => {
-        this.openAnimation.restart();
+        if (!this.props.open) {
+            this.openAnimation.restart();
+        }
     }
 
     closeBook = () => {
@@ -116,6 +130,18 @@ class Home extends React.Component {
                 ref={ref => this.container = ref}
                 onWheel={this.handleScroll}
             >
+                <div className="blogLink" ref={ref => this.blog = ref}>
+                    <Link to="/">
+                        <IconButton onClick={this.openBook}>
+                            <img src={blogImg} />
+                        </IconButton>
+                    </Link>
+                    <Link to="/blog">
+                        <IconButton onClick={this.openBook}>
+                            <img src={blogImg} />
+                        </IconButton>
+                    </Link>
+                </div>
                 <div ref={ref => this.image = ref} className={classes.imageContainer}>
                     <img alt="test" className="splashImg" src={splash} />
                 </div>

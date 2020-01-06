@@ -1,9 +1,12 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 import backgroundImage from './assets/paper.jpg';
+
 import Home from './components/home';
 import Content from './components/content';
+import Blog from './components/blog';
 
 const styles = theme => ({
     root: {
@@ -30,17 +33,21 @@ class App extends React.Component {
     }
 
     render() {
-
         const { classes } = this.props;
 
         return (
             <div className={`${classes.root} App`}>
-                <Home
-                    open={this.state.open}
-                    openBook={this.openBook}
-                    closeBook={this.closeBook}
-                />
-                <Content open={this.state.open} />
+                <Router>
+                    <Home
+                        open={this.state.open}
+                        openBook={this.openBook}
+                        closeBook={this.closeBook}
+                    />
+                    <Route path="/" exact render={props => (
+                        <Content open={this.state.open} {...props} />
+                    )} />
+                    <Route path="/blog/" component={Blog} />
+                </Router>
             </div>
         );
     }
