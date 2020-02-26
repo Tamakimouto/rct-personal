@@ -6,6 +6,7 @@ import RootRef from '@material-ui/core/RootRef';
 import IconButton from '@material-ui/core/IconButton';
 import Swipe from 'react-easy-swipe';
 import blogImg from '../assets/blog.png';
+import homeImg from '../assets/home.png';
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
@@ -132,8 +133,8 @@ class Home extends React.Component {
             >
                 <div className="blogLink" ref={ref => this.blog = ref}>
                     <Link to="/">
-                        <IconButton onClick={this.openBook}>
-                            <img src={blogImg} />
+                        <IconButton onClick={this.closeBook}>
+                            <img src={homeImg} />
                         </IconButton>
                     </Link>
                     <Link to="/blog">

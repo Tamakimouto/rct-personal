@@ -56,7 +56,7 @@ const Blog = (props) => {
                         <div key={post.id} className={classes.post}>
                             <h2>{post.title}</h2>
                             <span>{format(new Date(post.published), "MMM Do, yyyy - hh:mm a")}</span>
-                            <p>{post.content}</p>
+                            <p dangerouslySetInnerHTML={{__html: post.content}}></p>
                         </div>
                     ))}
                 </div>
